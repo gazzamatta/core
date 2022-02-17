@@ -156,7 +156,7 @@ class ModbusCover(BasePlatform, CoverEntity, RestoreEntity):
         self._lazy_errors = self._lazy_error_count
         self._attr_available = True
         if self._input_type == CALL_TYPE_COIL:
-            self._set_attr_state(bool(result.bits[0] & 1))
+            self._set_attr_state(bool(result.bits[self._address % 8] & 1))
         else:
             self._set_attr_state(int(result.registers[0]))
         self.async_write_ha_state()
